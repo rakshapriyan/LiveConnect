@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@shiguredo/noise-suppression": "^2022.4.2"
+  }
+}

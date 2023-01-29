@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Ivy Streams</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <link href="/assets/css/main.css" rel="stylesheet">
+    <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Roboto:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Work+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+  <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+</head>
+<body  style="background-color: black;">
+    <!-- ======= Header ======= -->
+  <header id="header" class="header d-flex align-items-center">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+        <h1>LiveConnect<span>.</span></h1>
+      </a>
+
+      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
+      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
+      <nav id="navbar" class="navbar"> 
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="VideoChatApplication/index.html">Services</a></li>
+          <li><a href="chatstream/index.html">Projects</a></li>
+          
+        </ul>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+
+  <section id="hero" class="hero">
+
+    <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+
+      <div class="carousel-item">
+      </div>
+    </div>
+
+
+
+    <div class="info d-flex align-items-center">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6 text-center">
+              <button id="join-btn">Join Stream</button>
+            
+              <div id="stream-wrapper">
+                  <div id="video-streams"></div>
+            
+                  <div id="stream-controls">
+                      <button id="leave-btn">Leave Stream</button>
+                      <button id="mic-btn">Mic On</button>
+                      <button id="camera-btn">Camera on</button>
+                  </div>
+              </div>
+           </div>
+        </div>
+      </div>
+    </div>
+
+
+  </section>
+
+    
+</body>
+<script src="AgoraRTC_N-4.16.0.js"></script>
+<script src='main.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/@shiguredo/noise-suppression@latest/dist/noise_suppression.js"></script>
+<script>
+    
+    const assetsPath = "https://cdn.jsdelivr.net/npm/@shiguredo/noise-suppression@latest/dist";
+    const processor = new Shiguredo.NoiseSuppressionProcessor(assetsPath);
+
+    
+    
+
+    navigator.mediaDevices.getUserMedia({audio: constraints}).then((stream) => {
+        const track = stream.getAudioTracks()[3];
+
+        processor.startProcessing(track).then((processed_track) => {
+            const audioElement = document.getElementById("outputAudio"); // 音声の出力先を取得
+            audioElement.srcObject = new MediaStream([processed_track]);
+        });
+    });
+
+
+    
+    processor.stopProcessing();
+</script>
+</html>
